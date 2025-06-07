@@ -8,3 +8,4 @@ This file tracks the implementation progress for the planned Lisp-style macro sy
 - [ ] Compiler hooks for detecting and expanding macros
 - [ ] Comprehensive test suite for macros
 - [ ] Additional documentation and usage examples
+- [x] Support loading macros from external files

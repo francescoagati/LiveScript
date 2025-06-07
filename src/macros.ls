@@ -1,5 +1,6 @@
 macroEnv = {}
 ls = require './index'
+fs = require 'fs'
 
 define = (name, fn) ->
   macroEnv[name] = fn
@@ -11,6 +12,17 @@ evalLS = (code) ->
 
 defineLS = (name, code) ->
   define name, evalLS code
+
+load-file = (filename) ->
+  Module = require 'module'
+  path = require 'path'
+  code = fs.read-file-sync filename, 'utf8'
+  js = ls.compile code, bare: true
+  js = js.replace /^\/\/.*\n/, '' .replace /;\s*$/, ''
+  mod = new Module filename, module
+  mod.filename = filename
+  mod.paths = Module._nodeModulePaths path.dirname filename
+  mod._compile js, filename
 
 isList = Array.isArray
 
@@ -114,4 +126,5 @@ module.exports =
   qq: qq
   evalLS: evalLS
   defineLS: defineLS
+  loadFile: load-file
   gensym: gensym

@@ -40,6 +40,12 @@ macros.define 'when', (test, ...body) ->
 The call to `expand` returns the transformed abstract syntax tree. See
 `test/macro.ls` for more examples.
 
+Macros can also be loaded from external files using `loadFile`:
+
+```livescript
+macros.load-file 'path/to/macros.ls'
+```
+
 ### Community
 
 If you'd like to chat, drop by [#livescript](irc://irc.freenode.net/livescript) on Freenode IRC.
