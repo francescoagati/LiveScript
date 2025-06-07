@@ -63,3 +63,14 @@ deep-equal exp6, [
   ['if', false, ['console.log', 'x']],
   ['if', false, ['console.log', 'x']]
 ]
+
+# quasiquote supports nested unquote and splicing
+qq-res = macros.qq ['`', ['list', [',', 1], [',@', [2, 3]], [',', ['+', 1, 2]]]]
+deep-equal qq-res, ['list', 1, 2, 3, ['+', 1, 2]]
+
+# unmatched pattern should throw an error
+macros.define-syntax 'simple', [
+  [ ['simple', '@x'], '@x' ]
+]
+throws 'no matching pattern for macro simple', ->
+  macros.expand ['simple', 'a', 'b']
