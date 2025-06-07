@@ -489,9 +489,6 @@ class exports.Block extends Node
         # Wrap everything in a safety closure unless requested not to.
         bare or code = ["(function(){\n", ...code, "\n}).call(this);\n"]
         result = sn null, prefix || [], options.header || [], comment || [], code
-        if o['es6-class']
-            js = if typeof! result is 'String' then result else result.to-string!
-            result = require('./index').transpile-es6-class js
         result
 
     # Compile to a function body.
@@ -2149,6 +2146,8 @@ class exports.Class extends Node
     get-ref: -> Var that if @title?var-name! or @name
 
     compile: (o, level) ->
+        if o['es6-class']
+            return @compile-es6 o, level
         {{{lines}:body}:fun, title} = this
         CopyL this, fun
 
@@ -2247,6 +2246,36 @@ class exports.Class extends Node
         clas = Assign vname, clas if decl and title.is-complex!
         clas = Assign title, clas if title
         sn(null, (clas.compile o, level))
+
+    compile-es6: (o, level) ->
+        {{{lines}:body}:fun, title} = this
+        name = title?var-name! or @name
+        ind = o.indent
+        inner = ind + TAB
+        ctor = null
+        props = []
+        for node in lines
+            if node instanceof Fun and not node.statement
+                ctor = node
+            else if node instanceof Obj
+                props.push ...node.items
+        parts = ["class ", name]
+        parts.push " extends ", (@sup.compile o, LEVEL_PAREN) if @sup
+        parts.push " {\n"
+        meth-o = {...o, indent: inner, level: LEVEL_TOP}
+        if ctor
+            ctor.name = undefined
+            fn = ctor.compile meth-o
+            code = fn.to-string!.replace /^function\s*\w*\s*/, ''
+            parts.push inner, "constructor", code, "\n"
+        for prop in props
+            fun = prop.val
+            key = if prop.key instanceof Key then prop.key.name else prop.key.compile o
+            fn = fun.compile meth-o
+            code = fn.to-string!.replace /^function\s*\w*\s*/, ''
+            parts.push inner, key, code, "\n"
+        parts.push ind, "}"
+        sn null, ...parts
 
 #### Super
 # Reference to the parent method or constructor.
