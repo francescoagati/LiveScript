@@ -488,7 +488,11 @@ class exports.Block extends Node
         code = [(@compile-with-declarations o)]
         # Wrap everything in a safety closure unless requested not to.
         bare or code = ["(function(){\n", ...code, "\n}).call(this);\n"]
-        sn null, prefix || [], options.header || [], comment || [], code
+        result = sn null, prefix || [], options.header || [], comment || [], code
+        if o['es6-class']
+            js = if typeof! result is 'String' then result else result.to-string!
+            result = require('./index').transpile-es6-class js
+        result
 
     # Compile to a function body.
     compile-with-declarations: (o) ->

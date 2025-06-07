@@ -44,6 +44,9 @@ exports <<<
               ast = parser.parse lexer.lex code
               ast.make-return! if options.run and options.print
               output = ast.compile-root options
+              if options['es6-class']
+                  js = if typeof! output is 'String' then output else output.to-string!
+                  output = exports.transpile-es6-class js
               if options.map and options.map isnt 'none'
                   {filename, output-filename} = options
                   unless filename
@@ -79,6 +82,21 @@ exports <<<
     run: (code, options) ->
         output = exports.compile code, {...options, +bare}
         do Function (if typeof! output is 'String' then output else output.code)
+
+    transpile-es6-class: (code) ->
+        m = code.match /^var (\w+);\n\1 = \(function\(\)\{\n([\s\S]*?)\n\}\(\)\);?$/
+        return code unless m
+        [_, name, body] = m
+        body = body
+            .replace(new RegExp("^\\s*#{name}\\.displayName[^\n]*\n"), '')
+            .replace(new RegExp("\n\\s*#{name}\\.displayName[^\n]*\n"), "\n")
+            .replace(/^\s*var prototype = [^\n]+\n/, '')
+            .replace(/\n\s*var prototype = [^\n]+\n/, "\n")
+            .replace(new RegExp("#{name}\\.prototype\\.(\\w+) = function\\(", 'g'), (__, m) -> "#{m}(")
+            .replace(/};\n/g, "}\n")
+            .replace(new RegExp("function #{name}\\("), 'constructor(')
+            .replace(new RegExp("return #{name};"), '')
+        "class #{name} {\n#{body}\n}"
 
 exports.tokens.rewrite = lexer.rewrite
 
