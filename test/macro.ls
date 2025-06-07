@@ -52,3 +52,14 @@ eq exp4[2][1], 'x'
 eq exp4[2][2], 'y'
 eq exp5[2][1], 'a'
 eq exp5[2][2], 'b'
+
+macros.define 'twice', (expr) ->
+  ['do', expr, expr]
+
+exp6 = macros.expand ['twice', ['when', false, ['console.log', 'x']]]
+
+deep-equal exp6, [
+  'do',
+  ['if', false, ['console.log', 'x']],
+  ['if', false, ['console.log', 'x']]
+]
