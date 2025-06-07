@@ -76,10 +76,12 @@ defineSyntax = (name, patterns) ->
 qq = (x) ->
   if isList x
     if x.length > 0
-      if x[0] is 'unquote'
+      if x[0] in ['unquote', ',']
         x[1]
-      else if x[0] is 'splice'
+      else if x[0] in ['splice', ',@']
         {splice: true, value: qq x[1]}
+      else if x[0] is '`'
+        qq x[1]
       else
         res = []
         for item in x

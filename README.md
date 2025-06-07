@@ -29,6 +29,14 @@ macros.define-syntax 'unless', [
 exp = macros.expand ['unless', true, ['console.log', 'ok']]
 ```
 
+Another macro can be defined using template syntax with backtick and comma
+markers:
+
+```livescript
+macros.define 'when', (test, ...body) ->
+  macros.qq ['`', ['if', [',', test], [',@', body]]]
+```
+
 The call to `expand` returns the transformed abstract syntax tree. See
 `test/macro.ls` for more examples.
 
