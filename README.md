@@ -15,6 +15,23 @@ After, run `lsc -h` for more information.
 ### Source
 [git://github.com/gkz/LiveScript.git](git://github.com/gkz/LiveScript.git)
 
+### Using Macros
+LiveScript ships with a small Lisp‑style macro system located in
+`lib/macros.js`. Load the module and define macros using either
+`define` or `defineSyntax`:
+
+```livescript
+macros = require '../lib/macros'
+macros.define-syntax 'unless', [
+  [ ['unless', '@test', '@body...'], ['if', ['not', '@test'], '@body...'] ]
+]
+
+exp = macros.expand ['unless', true, ['console.log', 'ok']]
+```
+
+The call to `expand` returns the transformed abstract syntax tree. See
+`test/macro.ls` for more examples.
+
 ### Community
 
 If you'd like to chat, drop by [#livescript](irc://irc.freenode.net/livescript) on Freenode IRC.
