@@ -120,6 +120,38 @@ expand = (expr) ->
   else
     expr
 
+to-js = (expr) ->
+  if typeof expr is 'string'
+    if /^[A-Za-z_$][\w$.]*$/.test expr
+      expr
+    else
+      JSON.stringify expr
+  else if isList expr
+    switch expr[0]
+      | 'if'
+        cond = to-js expr[1]
+        cons = to-js expr[2]
+        if expr.length > 3
+          alt = to-js expr[3]
+          "if (#{cond}) {#{cons}} else {#{alt}}"
+        else
+          "if (#{cond}) {#{cons}}"
+      | 'not'
+        "!(#{to-js expr[1]})"
+      | 'set'
+        "#{to-js expr[1]} = #{to-js expr[2]}"
+      | 'var'
+        "var #{to-js expr[1]} = #{to-js expr[2]}"
+      | 'do'
+        expr.slice(1).map((e) -> to-js e).join('; ')
+      | _
+        "#{to-js expr[0]}(#{expr.slice(1).map((e) -> to-js e).join ', '})"
+  else
+    JSON.stringify expr
+
+compile = (expr) ->
+  to-js expand expr
+
 module.exports =
   define: define
   defineSyntax: defineSyntax
@@ -129,3 +161,4 @@ module.exports =
   defineLS: defineLS
   loadFile: load-file
   gensym: gensym
+  compile: compile

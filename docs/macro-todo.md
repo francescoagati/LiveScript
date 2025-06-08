@@ -9,7 +9,7 @@ This file tracks the implementation progress for the planned Lisp-style macro sy
 - [x] Comprehensive test suite for macros
 - [x] Additional documentation and usage examples
 - [x] Support loading macros from external files
-- [ ] Automatic macro expansion during compilation
+- [x] Automatic macro expansion during compilation via `macros.compile`
 - [x] Integrate macro definitions into standard library
 - [x] Add error messages for failed pattern matches
 - [ ] Automatic macro expansion during compilation

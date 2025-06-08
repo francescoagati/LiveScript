@@ -41,7 +41,8 @@ This document outlines a proposed design for implementing a Lisp/Scheme-style ma
 
 3. **Interpreter for Macros**
    - Embed a lightweight LiveScript interpreter.
-   - Evaluate macro bodies during the compilation pass.
+ - Evaluate macro bodies during the compilation pass.
+  - Provide a helper to compile expanded macro forms directly to JavaScript.
 
 4. **Compiler Hooks**
    - Detect `define` and `define-syntax` forms during parsing.

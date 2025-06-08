@@ -47,6 +47,16 @@ Macros can also be loaded from external files using `loadFile`:
 macros.load-file 'path/to/macros.ls'
 ```
 
+Macro expressions can also be compiled directly to JavaScript. The `compile`
+utility expands the form and emits a JS string:
+
+```livescript
+macros.define 'when', (t, ...body) ->
+  macros.qq ['`', ['if', [',', t], [',@', body]]]
+
+js = macros.compile ['when', true, ['console.log', 42]]
+```
+
 ### Community
 
 If you'd like to chat, drop by [#livescript](irc://irc.freenode.net/livescript) on Freenode IRC.
