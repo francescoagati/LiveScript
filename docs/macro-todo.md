@@ -8,10 +8,13 @@ This file tracks the implementation progress for the planned Lisp-style macro sy
  - [x] Compiler hooks for detecting and expanding macros
 - [x] Comprehensive test suite for macros
 - [x] Additional documentation and usage examples
-- [x] Support loading macros from external files
+- [x] Support macro libraries that can be loaded from external files via `loadFile`
 - [x] Automatic macro expansion during compilation via `macros.compile`
 - [x] Integrate macro definitions into standard library
 - [x] Add error messages for failed pattern matches
+- [x] Macro utilities are accessible via `require('livescript').macros`
+- [ ] Explore advanced hygiene mechanisms for macro-generated identifiers
+- [ ] Investigate performance implications of recursive expansion
 - [ ] Automatic macro expansion during compilation
 - [ ] Integrate macro definitions into standard library
 - [ ] Add error messages for failed pattern matches
