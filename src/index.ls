@@ -30,6 +30,7 @@ bufferFrom = Buffer.alloc and Buffer.from or -> new Buffer it
 
 exports <<<
     VERSION: '1.6.1'
+    macros: require './macros'
 
     # Compiles a string of LiveScript code to JavaScript.
     compile: (code, options = {}) ->

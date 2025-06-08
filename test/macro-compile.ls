@@ -3,7 +3,7 @@ macros = require '../lib/macros'
 
 # compile LiveScript code that defines and uses a macro
 code = [
-  "macros = require '../lib/macros'",
+  "macros = require('..').macros",
   "macros.define-syntax 'unless', [[['unless', '@test', '@body...'], ['if', ['not', '@test'], '@body...']]]",
   "expanded = macros.expand ['unless', false, ['console.log', 'hi']]"
 ].join '\n'

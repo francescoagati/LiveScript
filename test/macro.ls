@@ -72,5 +72,5 @@ deep-equal qq-res, ['list', 1, 2, 3, ['+', 1, 2]]
 macros.define-syntax 'simple', [
   [ ['simple', '@x'], '@x' ]
 ]
-throws 'no matching pattern for macro simple', ->
+throws 'no matching pattern for macro simple; tried ["simple","@x"]', ->
   macros.expand ['simple', 'a', 'b']

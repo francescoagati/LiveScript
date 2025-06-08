@@ -10,8 +10,8 @@ This file tracks the implementation progress for the planned Lisp-style macro sy
 - [x] Additional documentation and usage examples
 - [x] Support loading macros from external files
 - [ ] Automatic macro expansion during compilation
-- [ ] Integrate macro definitions into standard library
-- [ ] Add error messages for failed pattern matches
+- [x] Integrate macro definitions into standard library
+- [x] Add error messages for failed pattern matches
 - [ ] Automatic macro expansion during compilation
 - [ ] Integrate macro definitions into standard library
 - [ ] Add error messages for failed pattern matches

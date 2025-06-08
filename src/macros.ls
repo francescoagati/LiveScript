@@ -83,7 +83,8 @@ defineSyntax = (name, patterns) ->
     for [pat, templ] in patterns
       env = {}
       return substitute templ, env if matchPattern pat, expr, env
-    throw new Error "no matching pattern for macro #{name}"
+    pat-str = patterns.map((p) -> JSON.stringify p[0]).join ', '
+    throw new Error "no matching pattern for macro #{name}; tried #{pat-str}"
 
 qq = (x) ->
   if isList x

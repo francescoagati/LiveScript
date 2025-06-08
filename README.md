@@ -17,7 +17,8 @@ After, run `lsc -h` for more information.
 
 ### Using Macros
 LiveScript ships with a small Lisp‑style macro system located in
-`lib/macros.js`. Load the module and define macros using either
+`lib/macros.js`. The macros module is also exported as
+`require('livescript').macros`. Load the module and define macros using either
 `define` or `defineSyntax`:
 
 ```livescript
