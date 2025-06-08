@@ -152,6 +152,36 @@ to-js = (expr) ->
 compile = (expr) ->
   to-js expand expr
 
+preprocess = (code) ->
+  out = ''
+  i = 0
+  while (j = code.index-of 'macros.compile', i) > -1
+    out += code.slice i, j
+    j += 'macros.compile'.length
+    while /\s/.test code[j]
+      j++
+    if code[j] in '(['
+      open = code[j]
+      close = if open is '(' then ')' else ']'
+      j++
+      start = j
+      depth = 1
+      while depth > 0 and j < code.length
+        ch = code[j]
+        depth++ if ch is open
+        depth-- if ch is close
+        j++
+      expr = code.slice start, j - 1
+      js-expr = eval '(' + expr + ')'
+      out += compile js-expr
+      i = j
+    else
+      out += 'macros.compile'
+      i = j
+  out += code.slice i
+  out
+
+
 module.exports =
   define: define
   defineSyntax: defineSyntax
@@ -162,3 +192,4 @@ module.exports =
   loadFile: load-file
   gensym: gensym
   compile: compile
+  preprocess: preprocess

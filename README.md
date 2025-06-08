@@ -57,6 +57,14 @@ macros.define 'when', (t, ...body) ->
 js = macros.compile ['when', true, ['console.log', 42]]
 ```
 
+The main compiler can process these forms automatically when passed
+`expandMacros: true`:
+
+```livescript
+code = "macros.compile ['when', true, ['console.log', 1]]"
+js = require('../').compile code, {bare: true, expandMacros: true}
+```
+
 ### Community
 
 If you'd like to chat, drop by [#livescript](irc://irc.freenode.net/livescript) on Freenode IRC.
