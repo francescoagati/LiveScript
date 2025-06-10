@@ -41,6 +41,16 @@ macros.define 'when', (test, ...body) ->
 The call to `expand` returns the transformed abstract syntax tree. See
 `test/macro.ls` for more examples.
 
+When a macro expansion introduces temporary bindings, wrap the expansion in
+`withScope` so each expansion gets its own lexical scope:
+
+```livescript
+macros.define 'wrap', (body) ->
+  macros.with-scope ->
+    t = macros.gensym 'tmp'
+    macros.qq ['`', ['do', ['var', [',', t], 0], [',', body], [',', t]]]
+```
+
 Macros can also be loaded from external files using `loadFile`:
 
 ```livescript

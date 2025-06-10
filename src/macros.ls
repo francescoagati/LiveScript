@@ -26,10 +26,22 @@ load-file = (filename) ->
 
 isList = Array.isArray
 
+# track lexical scopes for hygienic identifiers
+scope-stack = [0]
+
 gensym-counter = 0
+
+with-scope = (fn) ->
+  scope-id = scope-stack.length
+  scope-stack.push scope-id
+  try
+    fn!
+  finally
+    scope-stack.pop!
+
 gensym = (prefix='g$') ->
   gensym-counter := gensym-counter + 1
-  prefix + gensym-counter
+  prefix + (scope-stack.join '$') + '$' + gensym-counter
 
 matchPattern = (pattern, expr, env = {}) ->
   if typeof pattern is 'string'
@@ -112,7 +124,8 @@ qq = (x) ->
 expand = (expr) ->
   if isList expr
     if typeof expr[0] is 'string' and Object.hasOwnProperty.call macroEnv, expr[0]
-      expand macroEnv[expr[0]].apply null, expr.slice 1
+      with-scope ->
+        expand macroEnv[expr[0]].apply null, expr.slice 1
     else
       for i from 0 til expr.length
         expr[i] = expand expr[i]
@@ -191,5 +204,6 @@ module.exports =
   defineLS: defineLS
   loadFile: load-file
   gensym: gensym
+  withScope: with-scope
   compile: compile
   preprocess: preprocess

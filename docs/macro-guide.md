@@ -64,6 +64,21 @@ macros.define-syntax 'swap', [
       ['set', '@a', '@b'],
       ['set', '@b', g] ] ]
 ]
+
+### Lexical Scoping
+
+For macros that introduce identifiers across multiple expansions, a lexical scope stack is maintained. The `withScope` helper creates a new scope during expansion, and `gensym` incorporates the current scope into the generated name. This prevents clashes even when macros expand inside other macros.
+
+```livescript
+macros.define 'wrap', (body) ->
+  macros.withScope ->
+    t = macros.gensym 'tmp'
+    macros.qq ['`', ['do', ['var', [',', t], 0], [',', body], [',', t]]]
+
+exp1 = macros.expand ['wrap', ['swap', 'a', 'b']]
+exp2 = macros.expand ['wrap', ['swap', 'x', 'y']]
+exp1[1][1] isnt exp2[1][1]
+```
 ```
 
 ## Quasiquote Templates

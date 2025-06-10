@@ -60,7 +60,7 @@ This document outlines a proposed design for implementing a Lisp/Scheme-style ma
 
 ## Future Work
 
-- Explore advanced hygiene mechanisms such as lexical scoping for macro-generated identifiers.
+- Initial lexical scoping for macro-generated identifiers implemented via `withScope` and scoped `gensym`.
 - Support for macro libraries that can be loaded from external files. (implemented via `loadFile`)
 - Macro utilities are accessible via `require('livescript').macros`.
 - Investigate performance implications of recursive expansion.
