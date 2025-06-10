@@ -101,6 +101,12 @@ module.exports = optionator do
           type: 'Boolean'
           description: 'suppress compiler warnings'
           default: 'true'
+        * option: 'expand-macros'
+          type: 'Boolean'
+          description: 'preprocess macros before compiling'
+        * option: 'show-expanded'
+          type: 'Boolean'
+          description: 'print code after macro expansion and exit'
     mutually-exclusive:
         * [ <[ compile output ]> \ast \tokens \lex ]
         ...

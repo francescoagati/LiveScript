@@ -78,6 +78,9 @@ code = "macros.compile ['when', true, ['console.log', 1]]"
 js = require('../').compile code, {bare: true, expandMacros: true}
 ```
 
+The `lsc` command supports these features via `--expand-macros`. Use
+`--show-expanded` to print the code after macro expansion without compiling.
+
 ### Community
 
 If you'd like to chat, drop by [#livescript](irc://irc.freenode.net/livescript) on Freenode IRC.

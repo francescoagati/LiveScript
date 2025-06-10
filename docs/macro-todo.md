@@ -19,10 +19,10 @@ This file tracks the implementation progress for the planned Lisp-style macro sy
 - [x] Provide ten complex macro examples under `examples/macros`
 - [x] Port macro examples from Paul Graham's *On Lisp*
 
-- [ ] Integrate macro expansion with the `lsc` command and Node API
+- [x] Integrate macro expansion with the `lsc` command and Node API
 - [ ] Provide a standard library of macros distributed with LiveScript
 - [ ] Enable cross-module expansion so macros can transform code in other files
-- [ ] Add `--show-expanded` flag to output expanded code for debugging
+- [x] Add `--show-expanded` flag to output expanded code for debugging
 - [ ] Cache macro expansions for faster recompiles
 - [ ] Document advanced macro debugging techniques
 - [ ] Automatic macro expansion during compilation

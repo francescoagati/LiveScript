@@ -70,8 +70,8 @@ Contributions toward any of these tasks are welcome. This roadmap should evolve 
 
 ## Toward a Full Macro Compiler
 
-- Integrate the macro engine directly into the LiveScript compiler so that macro expansion happens automatically during `lsc` and `require` usage.
+- Integrate the macro engine directly into the LiveScript compiler so that macro expansion happens automatically during `lsc` and `require` usage. A basic hook is available via the `--expand-macros` flag.
 - Provide a standard library of useful macros (control flow, data structures, pattern utilities).
 - Support cross-module expansion so macros defined in one file can rewrite another during compilation.
-- Offer a command-line flag to output the fully expanded LiveScript or JavaScript for debugging.
+- Offer a command-line flag to output the fully expanded LiveScript or JavaScript for debugging. (`--show-expanded`)
 - Investigate caching and performance optimizations for large projects.
