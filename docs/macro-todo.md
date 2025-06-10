@@ -15,6 +15,8 @@ This file tracks the implementation progress for the planned Lisp-style macro sy
 - [x] Macro utilities are accessible via `require('livescript').macros`
 - [x] Explore advanced hygiene mechanisms such as lexical scoping for macro-generated identifiers
 - [x] Investigate performance implications of recursive expansion
+
+- [x] Provide ten complex macro examples under `examples/macros`
 - [ ] Automatic macro expansion during compilation
 - [ ] Integrate macro definitions into standard library
 - [ ] Add error messages for failed pattern matches
