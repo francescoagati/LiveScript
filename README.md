@@ -41,6 +41,9 @@ macros.define 'when', (test, ...body) ->
 The call to `expand` returns the transformed abstract syntax tree. See
 `test/macro.ls` for more examples.
 
+Several classic macros from Paul Graham's *On Lisp*, such as `aif` and `awhen`,
+are implemented in the `examples/macros` directory.
+
 When a macro expansion introduces temporary bindings, wrap the expansion in
 `withScope` so each expansion gets its own lexical scope:
 

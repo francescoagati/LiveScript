@@ -17,6 +17,7 @@ This file tracks the implementation progress for the planned Lisp-style macro sy
 - [x] Investigate performance implications of recursive expansion
 
 - [x] Provide ten complex macro examples under `examples/macros`
+- [x] Port macro examples from Paul Graham's *On Lisp*
 - [ ] Automatic macro expansion during compilation
 - [ ] Integrate macro definitions into standard library
 - [ ] Add error messages for failed pattern matches
