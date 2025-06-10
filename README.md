@@ -16,9 +16,9 @@ After, run `lsc -h` for more information.
 [git://github.com/gkz/LiveScript.git](git://github.com/gkz/LiveScript.git)
 
 ### Using Macros
-LiveScript ships with a small Lisp‑style macro system located in
+LiveScript ships with a small Lisp-style macro system located in
 `lib/macros.js`. The macros module is also exported as
-`require('livescript').macros`. Load the module and define macros using either
+`require('livescript').macros`. A more extensive guide is available in `docs/macro-guide.md`. Load the module and define macros using either
 `define` or `defineSyntax`:
 
 ```livescript
