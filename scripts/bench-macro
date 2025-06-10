@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+var macros = require('../lib/macros');
+
+macros.define('repeat', function(n, expr) {
+  n = Number(n);
+  if (n <= 1) return ['do', expr];
+  return ['do', expr, ['repeat', n - 1, expr]];
+});
+
+var depth = parseInt(process.argv[2] || '100', 10);
+var expr = ['repeat', depth, ['noop']];
+
+var start = Date.now();
+var result = macros.expand(expr);
+var time = Date.now() - start;
+
+console.log('expanded depth', depth, 'in', time + 'ms');
+console.log('result length', JSON.stringify(result).length);

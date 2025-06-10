@@ -63,7 +63,7 @@ This document outlines a proposed design for implementing a Lisp/Scheme-style ma
 - Initial lexical scoping for macro-generated identifiers implemented via `withScope` and scoped `gensym`.
 - Support for macro libraries that can be loaded from external files. (implemented via `loadFile`)
 - Macro utilities are accessible via `require('livescript').macros`.
-- Investigate performance implications of recursive expansion.
+- Performance of recursive expansion investigated; see `docs/macro-performance.md`.
 
 Contributions toward any of these tasks are welcome. This roadmap should evolve as experimentation continues and more knowledge is gained about the best way to integrate macros into LiveScript.
 
