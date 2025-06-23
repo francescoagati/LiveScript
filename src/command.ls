@@ -114,6 +114,7 @@ switch
       o.map
       o.header
       o.warn
+      expandMacros: o['expand-macros'] or o.expandMacros or o['show-expanded']
   }
   t       = {input, options}
   try
@@ -131,6 +132,9 @@ switch
 
     json = o.json or /\.json\.ls$/.test filename
     run = o.run or (json and o.print)
+    if o['show-expanded']
+      say LiveScript.macros.preprocess t.input
+      throw
     if run
       LiveScript.emit 'compile' t
       print = json or o.print

@@ -15,6 +15,72 @@ After, run `lsc -h` for more information.
 ### Source
 [git://github.com/gkz/LiveScript.git](git://github.com/gkz/LiveScript.git)
 
+### Using Macros
+LiveScript ships with a small Lisp-style macro system located in
+`lib/macros.js`. The macros module is also exported as
+`require('livescript').macros`. A more extensive guide is available in `docs/macro-guide.md`. Load the module and define macros using either
+`define` or `defineSyntax`:
+
+```livescript
+macros = require '../lib/macros'
+macros.define-syntax 'unless', [
+  [ ['unless', '@test', '@body...'], ['if', ['not', '@test'], '@body...'] ]
+]
+
+exp = macros.expand ['unless', true, ['console.log', 'ok']]
+```
+
+Another macro can be defined using template syntax with backtick and comma
+markers:
+
+```livescript
+macros.define 'when', (test, ...body) ->
+  macros.qq ['`', ['if', [',', test], [',@', body]]]
+```
+
+The call to `expand` returns the transformed abstract syntax tree. See
+`test/macro.ls` for more examples.
+
+Several classic macros from Paul Graham's *On Lisp*, such as `aif` and `awhen`,
+are implemented in the `examples/macros` directory.
+
+When a macro expansion introduces temporary bindings, wrap the expansion in
+`withScope` so each expansion gets its own lexical scope:
+
+```livescript
+macros.define 'wrap', (body) ->
+  macros.with-scope ->
+    t = macros.gensym 'tmp'
+    macros.qq ['`', ['do', ['var', [',', t], 0], [',', body], [',', t]]]
+```
+
+Macros can also be loaded from external files using `loadFile`:
+
+```livescript
+macros.load-file 'path/to/macros.ls'
+```
+
+Macro expressions can also be compiled directly to JavaScript. The `compile`
+utility expands the form and emits a JS string:
+
+```livescript
+macros.define 'when', (t, ...body) ->
+  macros.qq ['`', ['if', [',', t], [',@', body]]]
+
+js = macros.compile ['when', true, ['console.log', 42]]
+```
+
+The main compiler can process these forms automatically when passed
+`expandMacros: true`:
+
+```livescript
+code = "macros.compile ['when', true, ['console.log', 1]]"
+js = require('../').compile code, {bare: true, expandMacros: true}
+```
+
+The `lsc` command supports these features via `--expand-macros`. Use
+`--show-expanded` to print the code after macro expansion without compiling.
+
 ### Community
 
 If you'd like to chat, drop by [#livescript](irc://irc.freenode.net/livescript) on Freenode IRC.
